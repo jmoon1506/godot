@@ -886,11 +886,13 @@ void Polygon2DEditor::_uv_input(const Ref<InputEvent> &p_input) {
 					if (from_dist < 2)
 						break;
 
+					Vector2 rel_center = uv_drag_to - mtx.xform(center);
+					Vector2 reflect = Vector2((rel_center.x >= 0) ? 1 : -1, (rel_center.y >= 0) ? 1 : -1);
 					float scale = to_dist / from_dist;
 
 					for (int i = 0; i < uv_new.size(); i++) {
 						Vector2 rel = points_prev[i] - center;
-						rel = rel * scale;
+						rel = rel * scale * reflect;
 						uv_new.set(i, center + rel);
 					}
 
